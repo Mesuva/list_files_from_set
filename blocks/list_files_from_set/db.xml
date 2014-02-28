@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btListFilesFromSet">
+		<field name="bID" type="I">
+			<key />
+			<unsigned />
+		</field>
+		<field name="fsID" type="I">
+			<unsigned />
+		</field>
+		
+		<field name="numberFiles" type="I">
+			<default value="0"/>
+		</field>
+		
+		<field name="fileOrder" type="C" size="20">
+			<descr>Options: 'date_asc', 'date_desc', 'alpha_asc', 'alpha_desc', 'set_order', 'set_order_rev'</descr>
+		</field>
+		
+		<field name="displaySetTitle" type="I1">
+			<unsigned />
+			<default value="0" />
+		</field>
+		
+		<field name="replaceUnderscores" type="I1">
+			<unsigned />
+			<default value="1" />
+		</field>
+		
+				
+		<field name="uppercaseFirst" type="I1">
+			<unsigned />
+			<default value="0" />
+		</field>
+		
+		<field name="displaySize" type="I1">
+			<unsigned />
+			<default value="1" />
+		</field>
+		
+		<field name="displayDateAdded" type="I1">
+			<unsigned />
+			<default value="1" />
+		</field>
+		
+		
+		<field name="extension" type="C" size="10">
+			<descr>Options: 'show', 'hide', 'brackets'</descr>
+		</field>
+		
+		<field name="noFilesMessage" type="C" size="255">
+		</field>
+		
+		<field name="titleOverride" type="C" size="255">
+		</field>
+		
+	</table>
+</schema>
