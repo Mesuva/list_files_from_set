@@ -1,16 +1,13 @@
 <?php     defined('C5_EXECUTE') or die("Access Denied.");
-	
-$date = Loader::helper('date');
-	
+
+
 $c = Page::getCurrentPage();
 
 if($c instanceof Page) {
 	$cID = $c->getCollectionID();
 }
 
-$files = $controller->getFileSet();
-?>	
-
+?>
 
 <?php   if ($displaySetTitle && $filesetname = $controller->getFileSetName()) { ?>
 <h3><?php   echo $filesetname; ?></h3>
@@ -106,7 +103,8 @@ $files = $controller->getFileSet();
 		
 		 
 		if ($displayDateAdded) {
-		 	echo '<td>' . $date->getLocalDateTime($fv->getDateAdded(), DATE_APP_GENERIC_MDY) . '</td>';
+            $dh = Core::make('helper/date');
+            echo '<td>' . $dh->formatDate($fv->getDateAdded()) . '</td>';
 		}
 		?>
 		
@@ -119,6 +117,11 @@ $files = $controller->getFileSet();
 
 </table>
 <?php   }	?>
+
+<?php if ($pagination): ?>
+    <?php echo $pagination;?>
+<?php endif; ?>
+
 
 <?php   if (empty($files) && $noFilesMessage) { ?>
 <p><?php   echo $noFilesMessage; ?></p>

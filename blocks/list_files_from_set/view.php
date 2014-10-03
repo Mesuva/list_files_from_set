@@ -1,14 +1,13 @@
-<?php     defined('C5_EXECUTE') or die("Access Denied.");
-	
-$date = Loader::helper('date');
-	
-$c = Page::getCurrentPage();
+<?php
+defined('C5_EXECUTE') or die("Access Denied.");
 
-if($c instanceof Page) {
-	$cID = $c->getCollectionID();
+$page = Page::getCurrentPage();
+
+
+if($page instanceof Page) {
+	$cID = $page->getCollectionID();
 }
 
-$files = $controller->getFileSet();
 ?>	
 
 
@@ -18,9 +17,7 @@ $files = $controller->getFileSet();
 	
 <?php   if (!empty($files)) { ?>	
 <ul  class="fileset-list">
-
-	
-	<?php  	
+ 	<?php
 	foreach($files as $f) {
 		  
 		$fv = $f->getApprovedVersion();
@@ -79,9 +76,12 @@ $files = $controller->getFileSet();
 			
 			if ($displayDateAdded) {
 				// DATE_APP_GENERIC_MDY is simply a built in constant for a date format string
-				$title .= ' - ' . $date->getLocalDateTime($fv->getDateAdded(), DATE_APP_GENERIC_MDY);
+                $dh = Core::make('helper/date');
+                $title .= ' - ' . $dh->formatDate($fv->getDateAdded());
+
 		 	}
-		 
+
+
 		 	// if you want to add more information about a file (e.g. description, download count)
 		 	// look up in the API the functions for a File object and FileVersion object ($f and $fv in above code)
 		}
@@ -96,7 +96,13 @@ $files = $controller->getFileSet();
 <?php   }	?>
 
 </ul>
+
 <?php   }	?>
+
+<?php if ($pagination): ?>
+    <?php echo $pagination;?>
+<?php endif; ?>
+
 
 <?php   if (empty($files) && $noFilesMessage) { ?>
 <p><?php   echo $noFilesMessage; ?></p>
