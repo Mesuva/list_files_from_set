@@ -8,7 +8,7 @@ use BlockType;
 class Controller extends Package {
 
      protected $pkgHandle = 'list_files_from_set';
-     protected $appVersionRequired = '5.7.0.1';
+     protected $appVersionRequired = '5.7.0.4';
      protected $pkgVersion = '1.0.7';
 
      public function getPackageDescription() {
