@@ -55,6 +55,7 @@ class Controller extends BlockController
         $args['displayDateAdded'] = ($args['displayDateAdded']) ? '1' : '0';
         $args['uppercaseFirst'] = ($args['uppercaseFirst']) ? '1' : '0';
         $args['paginate'] = ($args['paginate']) ? '1' : '0';
+        $args['forceDownload'] = ($args['forceDownload']) ? '1' : '0';
 
         parent::save($args);
     }
@@ -123,10 +124,7 @@ class Controller extends BlockController
                     $pagination = $pagination->renderDefaultView();
                     $this->set('pagination', $pagination);
                 }
-
             }
-
-
         }
 
         return $files;

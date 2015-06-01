@@ -8,8 +8,8 @@ use BlockType;
 class Controller extends Package {
 
      protected $pkgHandle = 'list_files_from_set';
-     protected $appVersionRequired = '5.7.0.4';
-     protected $pkgVersion = '1.0.7';
+     protected $appVersionRequired = '5.7.4.0';
+     protected $pkgVersion = '1.0.8';
 
      public function getPackageDescription() {
           return t("A block to display a list of files from a file set.");

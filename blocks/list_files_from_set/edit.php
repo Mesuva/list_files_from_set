@@ -15,11 +15,12 @@ $al = Loader::helper('concrete/asset_library');
     ?>
     <div class="form-group">
 
-        <?php echo t('Display'); ?>
-        <input type="text" name="numberFiles" value="<?php echo $numberFiles ?>"
-               style="width: 30px"> <?php echo t('files from:'); ?>
+        <label for="numberFiles"><?php echo t('Display'); ?>
+            <?php echo $form->text('numberFiles', $numberFiles, array('maxlength'=>'10', 'style'=>'display: inline; width: 70px')); ?>
+            <?php echo t('files from:'); ?>
+        </label>
 
-        <select name="fsID">
+        <select name="fsID" class="form-control">
             <?php
 
             echo "<option value=\"\">* " . t('Select File Set') . " *</option>";
@@ -37,14 +38,18 @@ $al = Loader::helper('concrete/asset_library');
                 echo "<option " . $select . " value=\"" . $selfsID . "\">$fsn</option>";
             }
             ?>
-        </select><br/>
-        <?php echo t('(leave blank or enter zero for all files in set)'); ?>
+        </select>
+        <span class="help-block"><?php echo t('(leave blank or enter zero for all files in set)'); ?></span>
     </div>
 
     <div class="form-group">
-
         <?php  echo $form->checkbox('paginate', '1', $paginate); ?>
         <?php echo $form->label('paginate', t('Display pagination interface if more items are available than are displayed.')); ?>
+    </div>
+
+    <div class="form-group">
+        <?php  echo $form->checkbox('forceDownload', '1', $forceDownload); ?>
+        <?php echo $form->label('forceDownload', t('Force files to download')); ?>
     </div>
 
 </fieldset>
@@ -54,7 +59,7 @@ $al = Loader::helper('concrete/asset_library');
 
     <legend><?php echo t('Ordering') ?></legend>
     <div class="form-group">
-        <select name="fileOrder">
+        <select name="fileOrder" class="form-control">
             <option
                 value="date_desc" <?php if ($fileOrder == 'date_desc') echo 'selected="selected"'; ?>><?php echo t('Date added (newest first)'); ?></option>
             <option
@@ -77,28 +82,31 @@ $al = Loader::helper('concrete/asset_library');
     <div class="form-group">
         <?php  echo $form->checkbox('displaySetTitle', '1', $displaySetTitle); ?>
         <?php echo $form->label('displaySetTitle', t('Display name of set')); ?>
-        <br />
+    </div>
 
+    <div class="form-group">
         <?php  echo $form->checkbox('replaceUnderscores', '1', $replaceUnderscores); ?>
         <?php echo $form->label('replaceUnderscores', t('Replace underscores in titles with spaces')); ?>
-        <br />
+    </div>
 
+    <div class="form-group">
         <?php  echo $form->checkbox('uppercaseFirst', '1', $uppercaseFirst); ?>
         <?php echo $form->label('uppercaseFirst', t('Uppercase first letter of title (lowercase rest)')); ?>
-        <br />
+    </div>
 
+    <div class="form-group">
         <?php  echo $form->checkbox('displaySize', '1', $displaySize); ?>
         <?php echo $form->label('displaySize', t('Display file size')); ?>
-        <br />
+    </div>
 
+    <div class="form-group">
         <?php  echo $form->checkbox('displayDateAdded', '1', $displayDateAdded); ?>
         <?php echo $form->label('displayDateAdded', t('Display date added')); ?>
+    </div>
 
-
-
-        <br/>
-        <?php echo t('File extension:'); ?>
-        <select name="extension">
+    <div class="form-group">
+        <label for="extension"><?php echo t('File extension:'); ?></label>
+        <select name="extension" class="form-control">
             <option
                 value="show" <?php if ($extension == 'show') echo 'selected="selected"'; ?>><?php echo t('Leave in title (if present)'); ?></option>
             <option
@@ -108,27 +116,14 @@ $al = Loader::helper('concrete/asset_library');
         </select>
     </div>
 
-</fieldset>
-
-<fieldset>
-
-
-    <legend><?php echo t('Empty file set message (optional)') ?></legend>
     <div class="form-group">
-        <input id="noFilesMessage" name="noFilesMessage" value="<?php echo $noFilesMessage ?>" maxlength="255"
-               style="width: 302px" type="text">
+        <label for="noFilesMessage"><?php echo t('Empty file set message (optional)'); ?></label>
+        <?php  echo $form->text('noFilesMessage', $noFilesMessage, array('maxlength'=>'255')); ?>
     </div>
 
-</fieldset>
-
-<fieldset>
-
     <div class="form-group">
-
-        <legend><?php echo t('Title Override  (optional)') ?></legend>
-        <input id="titleOverride" name="titleOverride" value="<?php echo $titleOverride ?>" maxlength="255"
-               style="width: 302px" type="text"><br/>
+        <label for="titleOverride"><?php echo t('Title Override  (optional)'); ?></label>
+        <?php  echo $form->text('titleOverride', $titleOverride, array('maxlength'=>'255')); ?>
         <?php echo t("(will replace title/filename, e.g. 'latest file')"); ?>
-
-
+    </div>
 </fieldset>

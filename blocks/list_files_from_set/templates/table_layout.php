@@ -46,8 +46,11 @@ if($c instanceof Page) {
 		$filename = $fv->getFileName();
 		$ext =  pathinfo($filename, PATHINFO_EXTENSION);
 
-		
-		$url = View::url('/download_file', $f->getFileID(),$cID);
+        if ($forceDownload) {
+            $url = $f->getForceDownloadURL();
+        } else{
+            $url = $f->getDownloadURL();
+        }
 		
 		// if you wish to directly link to the file, bypassing permissons, logging, etc,
 		// use instead of the above line:  $url = $fv->getURL();

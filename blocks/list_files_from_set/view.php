@@ -3,11 +3,9 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 $page = Page::getCurrentPage();
 
-
 if($page instanceof Page) {
 	$cID = $page->getCollectionID();
 }
-
 ?>	
 
 
@@ -26,8 +24,13 @@ if($page instanceof Page) {
 		// the filename is retreived here so we can always get a file extension
 		$filename = $fv->getFileName();
 		$ext =  pathinfo($filename, PATHINFO_EXTENSION);
-		$url = View::url('/download_file', $f->getFileID(),$cID);
- 	
+
+        if ($forceDownload) {
+            $url = $f->getForceDownloadURL();
+        } else{
+            $url = $f->getDownloadURL();
+        }
+
 		// if you wish to directly link to the file, logging, etc,
 		// use instead of the above line:  $url = $fv->getURL();
 		
