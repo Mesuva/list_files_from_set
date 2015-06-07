@@ -14,6 +14,7 @@ class Controller extends BlockController
     protected $btInterfaceHeight = 450;
     protected $btTable = 'btListFilesFromSet';
     protected $btWrapperClass = 'ccm-ui';
+    protected $btDefaultSet = 'basic';
 
     /**
      * Used for localization. If we want to localize the name/description we have to include this
