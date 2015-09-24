@@ -14,7 +14,7 @@ if($c instanceof Page) {
 <?php   } ?>
 	
 <?php   if (!empty($files)) { ?>	
-<table class="fileset-table">
+<table class="fileset-table table">
 
 	<tr><th><?php echo t('File');?></th>
 	
