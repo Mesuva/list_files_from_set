@@ -8,8 +8,8 @@ use BlockType;
 class Controller extends Package {
 
      protected $pkgHandle = 'list_files_from_set';
-     protected $appVersionRequired = '5.7.4.0';
-     protected $pkgVersion = '1.0.10';
+     protected $appVersionRequired = '5.7.5';
+     protected $pkgVersion = '1.0.12';
 
      public function getPackageDescription() {
           return t("A block to display a list of files from a file set.");
@@ -23,7 +23,7 @@ class Controller extends Package {
          $pkg = parent::install();
 
           // install block
-          BlockType::installBlockTypeFromPackage('list_files_from_set', $pkg);
+          BlockType::installBlockType('list_files_from_set', $pkg);
      }
 
 }

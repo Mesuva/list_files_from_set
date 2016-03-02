@@ -2,7 +2,6 @@
 namespace Concrete\Package\ListFilesFromSet\Block\ListFilesFromSet;
 use \Concrete\Core\Block\BlockController;
 use FileSet;
-use Loader;
 use Core;
 use Concrete\Core\File\FileList;
 
@@ -36,8 +35,6 @@ class Controller extends BlockController
 
     public function validate($args)
     {
-        //$e = Loader::helper('validation/error');
-
         $e = Core::make('helper/validation/error');
         if ($args['fsID'] < 1) {
             $e->add(t('You must select a file set.'));
@@ -73,9 +70,12 @@ class Controller extends BlockController
             return $this->fileSetName;
         else {
             $fs = FileSet::getById($this->fsID);
-            return $fs->getFileSetName();
+            if ($fs) {
+                return $fs->getFileSetName();
+            }
         }
 
+        return false;
     }
 
     public function view() {
@@ -90,7 +90,7 @@ class Controller extends BlockController
         $files = array();
 
         // if the file set exists (may have been deleted)
-        if ($fs->fsID) {
+        if ($fs && $fs->fsID) {
 
             $this->fileSetName = $fs->getFileSetName();
 
