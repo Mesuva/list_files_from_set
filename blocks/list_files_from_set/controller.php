@@ -95,6 +95,11 @@ class Controller extends BlockController
             $this->fileSetName = $fs->getFileSetName();
 
             $fl = new FileList();
+            
+            if (version_compare(\Config::get('concrete.version'), '8.2', '>=')) {
+                $fl->ignorePermissions();
+            }
+            
             $fl->filterBySet($fs);
 
             if ($this->fileOrder == 'date_asc')
