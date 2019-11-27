@@ -1,23 +1,20 @@
 <?php
 namespace Concrete\Package\ListFilesFromSet\Block\ListFilesFromSet;
-use \Concrete\Core\Block\BlockController;
-use FileSet;
-use Core;
-use Concrete\Core\File\FileList;
 
+use Concrete\Core\File\FileList;
+use Concrete\Core\Block\BlockController;
+use Concrete\Core\Support\Facade\Config;
+use Concrete\Core\File\Set\Set as FileSet;
+use Concrete\Core\Search\Pagination\PaginationFactory;
 
 class Controller extends BlockController
 {
-
-    protected $btInterfaceWidth = 530;
+    protected $btInterfaceWidth = 660;
     protected $btInterfaceHeight = 450;
     protected $btTable = 'btListFilesFromSet';
     protected $btWrapperClass = 'ccm-ui';
     protected $btDefaultSet = 'basic';
 
-    /**
-     * Used for localization. If we want to localize the name/description we have to include this
-     */
     public function getBlockTypeDescription()
     {
         return t("Displays a list of files from a file set.");
@@ -35,17 +32,15 @@ class Controller extends BlockController
 
     public function validate($args)
     {
-        $e = Core::make('helper/validation/error');
+        $e = $this->app->make('helper/validation/error');
         if ($args['fsID'] < 1) {
             $e->add(t('You must select a file set.'));
         }
         return $e;
-
     }
 
     function save($args)
     {
-
         $args['numberFiles'] = ($args['numberFiles'] > 0) ? $args['numberFiles'] : 0;
         $args['displaySetTitle'] = ($args['displaySetTitle']) ? '1' : '0';
         $args['replaceUnderscores'] = ($args['replaceUnderscores']) ? '1' : '0';
@@ -57,7 +52,6 @@ class Controller extends BlockController
 
         parent::save($args);
     }
-
 
     public function getFileSetID()
     {
@@ -80,26 +74,24 @@ class Controller extends BlockController
 
     public function view() {
         $this->set('files', $this->getFileSet());
+        $this->set('app', $this->app);
     }
 
     public function getFileSet()
     {
-
         $fs = FileSet::getById($this->fsID);
-
         $files = array();
 
         // if the file set exists (may have been deleted)
         if ($fs && $fs->fsID) {
 
             $this->fileSetName = $fs->getFileSetName();
-
             $fl = new FileList();
-            
-            if (version_compare(\Config::get('concrete.version'), '8.2', '>=')) {
+
+            if (version_compare(Config::get('concrete.version'), '8.2', '>=')) {
                 $fl->ignorePermissions();
             }
-            
+
             $fl->filterBySet($fs);
 
             if ($this->fileOrder == 'date_asc')
@@ -121,8 +113,14 @@ class Controller extends BlockController
                 $fl->setItemsPerPage(10000);
             }
 
+            $factory = new PaginationFactory(\Request::getInstance());
+            if (method_exists($fl, 'createPaginationObject')) {
+                $pagination = $fl->createPaginationObject();
+                $pagination = $factory->deliverPaginationObject($fl, $pagination);
+            } else {
+                $pagination = $factory->createPaginationObject($fl);
+            }
 
-            $pagination = $fl->getPagination();
             $files = $pagination->getCurrentPageResults();
             if ($pagination->getTotalPages() > 1) {
 
@@ -152,7 +150,12 @@ class Controller extends BlockController
         return $this->getFileSetName() . ' ' . $search;
     }
 
+    public function add() {
+        $this->set('app', $this->app);
+    }
 
+    public function edit() {
+        $this->set('app', $this->app);
+    }
 }
 
-?>

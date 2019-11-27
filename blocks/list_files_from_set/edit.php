@@ -1,12 +1,18 @@
 <?php
 defined('C5_EXECUTE') or die("Access Denied.");
-use Concrete\Core\File\Set;
+use Concrete\Core\File\Set\Set as FileSet;
+
 $includeAssetLibrary = true;
-$al = Loader::helper('concrete/asset_library');
+$al = $app->make('helper/concrete/asset_library');
 ?>
 
-<fieldset>
-    <legend><?php echo t('Select File Set') ?></legend>
+<?php
+echo $app->make('helper/concrete/ui')->tabs(array(
+    array('fileset', t('Select File Set'), true),
+    array('display', t('Display Options'))));
+?>
+
+<div class="ccm-tab-content" id="ccm-tab-content-fileset">
     <?php
 
     $filesets = FileSet::getMySets();
@@ -52,13 +58,8 @@ $al = Loader::helper('concrete/asset_library');
         <?php echo $form->label('forceDownload', t('Force files to download')); ?>
     </div>
 
-</fieldset>
-
-
-<fieldset>
-
-    <legend><?php echo t('Ordering') ?></legend>
     <div class="form-group">
+        <?php echo $form->label('fileOrder', t('Ordering')); ?>
         <select name="fileOrder" class="form-control">
             <option
                 value="date_desc" <?php if ($fileOrder == 'date_desc') echo 'selected="selected"'; ?>><?php echo t('Date added (newest first)'); ?></option>
@@ -74,11 +75,12 @@ $al = Loader::helper('concrete/asset_library');
                 value="set_order_rev" <?php if ($fileOrder == 'set_order_rev') echo 'selected="selected"'; ?>><?php echo t('Set order (reversed)'); ?></option>
         </select>
     </div>
-</fieldset>
 
-<fieldset>
+</div>
 
-    <legend><?php echo t('Display options') ?></legend>
+
+
+<div class="ccm-tab-content" id="ccm-tab-content-display">
     <div class="form-group">
         <?php  echo $form->checkbox('displaySetTitle', '1', $displaySetTitle); ?>
         <?php echo $form->label('displaySetTitle', t('Display name of set')); ?>
@@ -126,4 +128,4 @@ $al = Loader::helper('concrete/asset_library');
         <?php  echo $form->text('titleOverride', $titleOverride, array('maxlength'=>'255')); ?>
         <?php echo t("(will replace title/filename, e.g. 'latest file')"); ?>
     </div>
-</fieldset>
+</div>
