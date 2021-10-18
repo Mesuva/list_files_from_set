@@ -10,7 +10,7 @@ use Concrete\Core\Search\Pagination\PaginationFactory;
 class Controller extends BlockController
 {
     protected $btInterfaceWidth = 660;
-    protected $btInterfaceHeight = 450;
+    protected $btInterfaceHeight = 480;
     protected $btTable = 'btListFilesFromSet';
     protected $btWrapperClass = 'ccm-ui';
     protected $btDefaultSet = 'basic';
