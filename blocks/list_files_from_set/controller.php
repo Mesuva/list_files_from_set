@@ -14,6 +14,7 @@ class Controller extends BlockController
     protected $btTable = 'btListFilesFromSet';
     protected $btWrapperClass = 'ccm-ui';
     protected $btDefaultSet = 'basic';
+    protected $fsID;
 
     public function getBlockTypeDescription()
     {
@@ -41,20 +42,20 @@ class Controller extends BlockController
 
     function save($args)
     {
-        $args['numberFiles'] = ($args['numberFiles'] > 0) ? $args['numberFiles'] : 0;
-        $args['displaySetTitle'] = ($args['displaySetTitle']) ? '1' : '0';
-        $args['replaceUnderscores'] = ($args['replaceUnderscores']) ? '1' : '0';
-        $args['displaySize'] = ($args['displaySize']) ? '1' : '0';
-        $args['displayDateAdded'] = ($args['displayDateAdded']) ? '1' : '0';
-        $args['uppercaseFirst'] = ($args['uppercaseFirst']) ? '1' : '0';
-        $args['paginate'] = ($args['paginate']) ? '1' : '0';
-        $args['forceDownload'] = ($args['forceDownload']) ? '1' : '0';
-
+        $args['numberFiles'] = (isset($args['numberFiles']) && (int)$args['numberFiles'] > 0) ? $args['numberFiles'] : 0;
+        $args['displaySetTitle'] = (isset($args['displaySetTitle'])) ? '1' : '0';
+        $args['replaceUnderscores'] = (isset($args['replaceUnderscores'])) ? '1' : '0';
+        $args['displaySize'] = (isset($args['displaySize'])) ? '1' : '0';
+        $args['displayDateAdded'] = (isset($args['displayDateAdded'])) ? '1' : '0';
+        $args['uppercaseFirst'] = (isset($args['uppercaseFirst'])) ? '1' : '0';
+        $args['paginate'] = (isset($args['paginate'])) ? '1' : '0';
+        $args['forceDownload'] = (isset($args['forceDownload'])) ? '1' : '0';
         parent::save($args);
     }
 
     public function getFileSetID()
     {
+        $this->fsID = isset($this->fsID) ? $this->fsID : null;
         return $this->fsID;
     }
 
@@ -151,6 +152,19 @@ class Controller extends BlockController
     }
 
     public function add() {
+
+        $this->set('numberFiles', 0);
+        $this->set('paginate', 1);
+        $this->set('forceDownload', 0);
+        $this->set('fileOrder', 1);
+        $this->set('displaySetTitle', 0);
+        $this->set('replaceUnderscores', 1);
+        $this->set('uppercaseFirst', 0);
+        $this->set('displaySize', 1);
+        $this->set('displayDateAdded', 0);
+        $this->set('extension', 0);
+        $this->set('noFilesMessage', '');
+        $this->set('titleOverride', '');
         $this->set('app', $this->app);
     }
 

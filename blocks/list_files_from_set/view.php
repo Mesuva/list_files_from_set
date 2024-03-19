@@ -105,7 +105,7 @@ if ($page instanceof Page) {
 
 <?php } ?>
 
-<?php if ($pagination): ?>
+<?php if (isset($pagination) && $pagination): ?>
     <?php echo $pagination; ?>
 <?php endif; ?>
 

@@ -9,7 +9,7 @@ class Controller extends Package {
 
     protected $pkgHandle = 'list_files_from_set';
     protected $appVersionRequired = '8.0';
-    protected $pkgVersion = '1.2';
+    protected $pkgVersion = '1.3';
 
     public function getPackageDescription() {
         return t("A block to display a list of files from a file set.");
